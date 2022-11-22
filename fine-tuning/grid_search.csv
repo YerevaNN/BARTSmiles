@@ -1,0 +1,2 @@
+,Type,Datasize,# of steps,# of subtasks,lr,Minutes to train 1 subtask,Hours to train all subtasks,dropout,noise_type,lambda
+HIV,Classification,41127,20564,1,3e-5,244,4.1,0.1
