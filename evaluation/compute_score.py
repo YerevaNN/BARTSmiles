@@ -1,5 +1,4 @@
 import sys
-from utils import compute_rmse, compute_auc, compute_conf_matrix, multi_task_predict
 from fairseq.data.data_utils import load_indexed_dataset
 from sklearn.metrics import roc_auc_score
 from fairseq.models.bart import BARTModel
@@ -43,6 +42,7 @@ args = parser.parse_args()
 root = args.root
 disk = args.disk
 sys.path.append(f"{root}/BARTSmiles/utils/")
+from utils import compute_rmse, compute_auc, compute_conf_matrix, multi_task_predict
 
 dataset = args.dataset_name #if args.dataset_name in set(["esol", "freesolv", "lipo", "BBBP", "BACE", "HIV"]) else f"{args.dataset_name}_{args.subtask}"
 

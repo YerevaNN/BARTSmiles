@@ -20,8 +20,12 @@ conda create --name <env_name> --file examples/requirements.txt
 
 ## Fine-tune MoleculeNet tasks
 
-1) Download and preprocess MoleculeNet datasets: `python root/BARTSmiles/process/process_datasets.py --dataset-name esol --is-MoleculeNet True` from the `root/BARTSmiles/preprocess`
-    This will create folders in `root/chemical/checkpoints/evaluation_data/esol` directory: 
+1) Download and preprocess MoleculeNet datasets: 
+Use CMD from the `root/BARTSmiles/preprocess`:
+```
+python root/BARTSmiles/process/process_datasets.py --dataset-name esol --is-MoleculeNet True
+```
+This will create folders in `root/chemical/checkpoints/evaluation_data/esol` directory: 
 ```
     esol
     │
@@ -75,17 +79,17 @@ conda create --name <env_name> --file examples/requirements.txt
 
 2) Generate the grid of training hyperparameters `root/BARTSmiles/fine-tuning/generate_grid_bartsmiles.py`. This will create a csv.
 
-cmd for regression task: 
+CMD for regression task: 
 ```
 python fine-tuning/generate_grid_bartsmiles.py --dataset-name esol --single-task True --dataset-size 1128 --is-Regression True
 ```
 
-cmd for classification single task: 
+CMD for classification single task: 
 ```
 python generate_grid_bartsmiles.py --dataset-name BBBP --single-task True --dataset-size 2039
 ```
 
-cmd for classification multilabel task: 
+CMD for classification multilabel task: 
 ``` 
 python fine-tuning/generate_grid_bartsmiles.py --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
 ```
@@ -97,8 +101,10 @@ This will write grid search parameters in `root/fairseq/examples/bartsmiles/grid
     You can follow: https://docs.wandb.ai/ref/cli/wandb-login 
 
 4) Train the models 
-CMD: `python root/BARTSmiles/fine-tuning/train_grid_bartsmiles.py  >> disk/logs/esol.log`. 
-This will produce checkpoint in `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
+CMD: 
+```python root/BARTSmiles/fine-tuning/train_grid_bartsmiles.py  >> disk/logs/esol.log``` 
+This will produce checkpoint in 
+`disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
 
 5) You will write wandb url in `wandb_url.csv` file 
 example:
@@ -109,4 +115,10 @@ url
 gayanec/Fine_Tune_clintox_0/6p76cyzr
 ```
 
-6) Perform SWA and evaluate `root/fairseq/examples/bartsmiles/evaluate_swa_bartsmiles.py`. This will produce a log file with output and averaged checkpoints respectivly in   `root/BARTSmiles/chemical/log/`  and `root_data/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.
+6) Perform SWA and evaluate from `root/fairseq/examples/bartsmiles`.
+CMD: 
+``` 
+python /evaluate_swa_bartsmiles.py 
+```
+
+This will produce a log file with output and averaged checkpoints respectivly in   `root/BARTSmiles/chemical/log/`  and `root_data/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.

@@ -1,5 +1,4 @@
 import sys
-from utils import tokenize, create_raw, fairseq_preprocess_cmd
 from process import cross_val
 import deepchem as dc
 import pandas as pd
@@ -23,8 +22,8 @@ p.add_argument('--root', default="/home/gayane/BartLM",
 
 args = p.parse_args()
 root = args.root
-
 sys.path.append(f"{root}/BARTSmiles/utils/")
+from utils import tokenize, create_raw, fairseq_preprocess_cmd
 
 np.random.seed(123)
 with open(f'{root}/BARTSmiles/datasets.json') as f:
