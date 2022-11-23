@@ -86,7 +86,7 @@ python fine-tuning/generate_grid_bartsmiles.py --dataset-name esol --single-task
 
 CMD for classification single task: 
 ```
-python generate_grid_bartsmiles.py --dataset-name BBBP --single-task True --dataset-size 2039
+python fine-tuning/generate_grid_bartsmiles.py --dataset-name BBBP --single-task True --dataset-size 2039
 ```
 
 CMD for classification multilabel task: 
@@ -94,7 +94,7 @@ CMD for classification multilabel task:
 python fine-tuning/generate_grid_bartsmiles.py --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
 ```
 
-This will write grid search parameters in `root/fairseq/examples/bartsmiles/grid_search.csv` file.
+This will write grid search parameters in `root/BARTSmiles/fine-tuning/grid_search.csv` file.
 
 3) Login to your wandb
     You have to login in wandb.
@@ -102,7 +102,7 @@ This will write grid search parameters in `root/fairseq/examples/bartsmiles/grid
 
 4) Train the models 
 CMD: 
-```python root/BARTSmiles/fine-tuning/train_grid_bartsmiles.py  >> disk/logs/esol.log``` 
+```python root/BARTSmiles/fine-tuning/train_grid_bartsmiles.py  >> root/chemical/log/esol.log``` 
 This will produce checkpoint in 
 `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
 
@@ -115,10 +115,10 @@ url
 gayanec/Fine_Tune_clintox_0/6p76cyzr
 ```
 
-6) Perform SWA and evaluate from `root/fairseq/examples/bartsmiles`.
+6) Perform SWA and evaluate from `root/BARTSmiles/evaluation`.
 CMD: 
 ``` 
-python /evaluate_swa_bartsmiles.py 
+python evaluate_swa_bartsmiles.py 
 ```
 
-This will produce a log file with output and averaged checkpoints respectivly in   `root/BARTSmiles/chemical/log/`  and `root_data/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.
+This will produce a log file with output and averaged checkpoints respectivly in   `root/chemical/log/`  and `root_data/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.
