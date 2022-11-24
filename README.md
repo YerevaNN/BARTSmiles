@@ -1,14 +1,17 @@
 # BARTSmiles: Generative Masked Language Models for Molecular Representations
 
 ## Introduction
-**BARTSmiles** is a chemical language model based on BART, which input is SMILES.
-We present our pretrained **BARTSmiles** model and fine-tuning strategy on multiple chemical property prediction, chemical reaction prediction and retrosynthesis tasks, and set state-of-the-art results on 11 of them.
+**BARTSmiles** is a chemical language model based on BART, trained on 1.7 billion SMILES strings from ZINC20 dataset.
 
-### Load BARTSmiles Pre-trained models
-`wget link`
+**BARTSmiles** can be fine-tuned on chemical property prediction and generative tasks, including chemical reaction prediction and retrosynthesis. *BARTSmiles* allows to get multiple state-of-the-art results. 
 
-### Load Vocab
-`wget link`
+### Load BARTSmiles pre-trained model
+`wget http://public.storage.yerevann.com/BARTSmiles/chem.model`
+
+`wget http://public.storage.yerevann.com/BARTSmiles/pretrained.pt`
+
+### Load the vocabulary
+`wget http://public.storage.yerevann.com/BARTSmiles/chem.vocab.fs`
 
 ## Setup 
 ```bash 
