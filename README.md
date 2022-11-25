@@ -46,7 +46,7 @@ cd ../../BARTSmiles/
 1) Download and preprocess MoleculeNet datasets: 
 Use the following command from the root folder:
 ```
-python process/process_datasets.py --dataset-name esol --is-MoleculeNet True
+python process/process_datasets.py --dataset-name esol --is-MoleculeNet True --root [the path where locate your BARTSmiles folder]
 ```
 This will create folders in `root/chemical/checkpoints/evaluation_data/esol` directory: 
 ```
@@ -104,17 +104,17 @@ This will create folders in `root/chemical/checkpoints/evaluation_data/esol` dir
 
 Command for the regression tasks: 
 ```
-python fine-tuning/generate_grid_bartsmiles.py --dataset-name esol --single-task True --dataset-size 1128 --is-Regression True
+python fine-tuning/generate_grid_bartsmiles.py --root [the path where locate your BARTSmiles folder] --dataset-name esol --single-task True --dataset-size 1128 --is-Regression True
 ```
 
 Command for the classification tasks having a single subtask: 
 ```
-python fine-tuning/generate_grid_bartsmiles.py --dataset-name BBBP --single-task True --dataset-size 2039
+python fine-tuning/generate_grid_bartsmiles.py --root [the path where locate your BARTSmiles folder] --dataset-name BBBP --single-task True --dataset-size 2039
 ```
 
 Command for a specific subtask of a multilabel classification task: 
 ``` 
-python fine-tuning/generate_grid_bartsmiles.py --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
+python fine-tuning/generate_grid_bartsmiles.py --root [the path where locate your BARTSmiles folder] --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
 ```
 
 3) Login to your wandb
@@ -124,7 +124,7 @@ python fine-tuning/generate_grid_bartsmiles.py --dataset-name Tox21 --subtasks 1
 4) Train the models using the following command:
 
 ```bash
-python fine-tuning/train_grid_bartsmiles.py  >> root/chemical/log/esol.log
+python fine-tuning/train_grid_bartsmiles.py --root [the path where locate your BARTSmiles folder] --disk [the path where you want to store your checkpoints]  >> root/chemical/log/esol.log
 ```
 
 This will produce a checkpoint in `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
@@ -141,7 +141,7 @@ gayanec/Fine_Tune_clintox_0/6p76cyzr
 6) Perform Stochastic Weight Averaging and evaluate from `root/BARTSmiles/evaluation` using the following command.
 
 ``` 
-python evaluation/evaluate_swa_bartsmiles.py 
+python evaluation/evaluate_swa_bartsmiles.py  --root [the path where locate your BARTSmiles folder] --disk [the path where you want to store your checkpoints]
 ```
 
-This will produce a log file with output and averaged checkpoints respectively in `root/chemical/log/`  and `root_data/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.
+This will produce a log file with output and averaged checkpoints respectively in `root/chemical/log/`  and `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.

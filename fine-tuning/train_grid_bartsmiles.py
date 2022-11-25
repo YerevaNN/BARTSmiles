@@ -29,7 +29,7 @@ with open(f'{path}/fine-tuning/grid_search.csv') as f:
 
 PATH1 = f"{root}/chemical/checkpoints/evaluation_data/"
 PATH2 = "/processed"
-BART_PATH = f"{root}/chemical/checkpoints/checkpoint_last.pt"
+BART_PATH = f"{root}/chemical/checkpoints/pretrained.pt"
 
 
 

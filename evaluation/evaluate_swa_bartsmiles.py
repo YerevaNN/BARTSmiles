@@ -134,7 +134,7 @@ for i in range(len(names)):
     task_name = n.split("_")[0] + '_' + n.split("_")[1] if n.split("_")[1].split('-')[0].isdigit() or n.split("_")[1].isdigit() else n.split("_")[0]
     is_regress = row['is_regression']
     noise_params = f" --noise_type {noise_type} --r3f {r3f_lambda}" if noise_type in ["uniform", "normal"] else ""
-    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --lr {lr} --dropout {drout}{noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name checkpoint_best.pt >> {root}/chemical/log/{task_name}.log""" 
+    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --disk {disk} --root {root} --lr {lr} --dropout {drout}{noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name checkpoint_best.pt >> {root}/chemical/log/{task_name}.log""" 
     print("---------------------> chkpt_name_best_val_loss: ", cmd)
     os.system(cmd)
     cmd = f"""python {root}/fairseq/scripts/average_checkpoints.py --inputs {directory}/ --output {directory}/{chkpt_name_best_val_loss}.pt --checkpoint-upper-bound {upper_bound_best_val_loss} --num-epoch-checkpoints {chkpt_count}""" 
@@ -143,7 +143,7 @@ for i in range(len(names)):
     os.system(cmd)
 
     
-    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --lr {lr} --dropout {drout} {noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_best_val_loss}.pt >> {root}/chemical/log/{task_name}.log""" 
+    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --disk {disk} --root {root} --lr {lr} --dropout {drout} {noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_best_val_loss}.pt >> {root}/chemical/log/{task_name}.log""" 
     print("---------------------> chkpt_name_best_val_loss SWA score: ", cmd)
     os.system(cmd)
 
@@ -156,12 +156,12 @@ for i in range(len(names)):
         os.system(cmd)
 
 
-        cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --lr {lr} --dropout {drout} {noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_best_val_acc}.pt >> {root}/chemical/log/{task_name}.log""" 
+        cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --disk {disk} --root {root} --lr {lr} --dropout {drout} {noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_best_val_acc}.pt >> {root}/chemical/log/{task_name}.log""" 
         print("---------------------> chkpt_name_best_val_acc SWA score: ", cmd)
         os.system(cmd)
 
 
-        cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --lr {lr} --dropout {drout} --dataset-name {task_name} {noise_params} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name checkpoint{best_val_accuracy[i]}.pt >> {root}/chemical/log/{task_name}.log""" 
+        cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --disk {disk} --root {root} --lr {lr} --dropout {drout} --dataset-name {task_name} {noise_params} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name checkpoint{best_val_accuracy[i]}.pt >> {root}/chemical/log/{task_name}.log""" 
         print("--------------------->  chkpt_name_best_val_acc score: ")
         print(cmd)
         os.system(cmd)
@@ -172,7 +172,7 @@ for i in range(len(names)):
     os.system(cmd)
 
 
-    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --lr {lr} --dropout {drout} --dataset-name {task_name} {noise_params} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_last}.pt >> {root}/chemical/log/{task_name}.log""" 
+    cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --disk {disk} --root {root} --lr {lr} --dropout {drout} --dataset-name {task_name} {noise_params} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name {chkpt_name_last}.pt >> {root}/chemical/log/{task_name}.log""" 
     print(" --------------------> last checkpoints SWA score: ")
     print(cmd)
     os.system(cmd)

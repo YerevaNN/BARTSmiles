@@ -2,21 +2,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 import pandas as pd
 import numpy as np
-import argparse
 import csv
 import os
 
 os.environ['MKL_THREADING_LAYER'] = 'GNU'
 
-p = argparse.ArgumentParser(description=__doc__,
-                            formatter_class=argparse.RawDescriptionHelpFormatter)
 
-p.add_argument('--root', default="/home/gayane/BartLM",
-                    help="add your root path")
-
-args = p.parse_args()
-root = args.root
-def scaff(dataset_name, type):
+def scaff(root, dataset_name, type):
 
     path = f"{root}/chemical/checkpoints/evaluation_data/"
     file=open(path + f"{dataset_name}/{dataset_name}/{type}_{dataset_name}.csv")
