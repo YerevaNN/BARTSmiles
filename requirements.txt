@@ -1,0 +1,62 @@
+antlr4-python3-runtime==4.8
+bitarray==2.6.0
+Bottleneck @ file:///opt/conda/conda-bld/bottleneck_1657175564434/work
+brotlipy @ file:///home/conda/feedstock_root/build_artifacts/brotlipy_1648854164373/work
+certifi==2022.9.24
+cffi @ file:///tmp/abs_98z5h56wf8/croots/recipe/cffi_1659598650955/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1661170624537/work
+click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
+colorama==0.4.6
+cryptography @ file:///home/conda/feedstock_root/build_artifacts/cryptography_1637687020823/work
+Cython==0.29.32
+deepchem @ file:///home/conda/feedstock_root/build_artifacts/deepchem_1642610217759/work
+docker-pycreds==0.4.0
+# Editable Git install with no remote (fairseq==0.12.2)
+-e /home/gayane/BartLM/fairseq
+gitdb @ file:///home/conda/feedstock_root/build_artifacts/gitdb_1635085722655/work
+GitPython @ file:///home/conda/feedstock_root/build_artifacts/gitpython_1665480281556/work
+hydra-core==1.0.7
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+joblib @ file:///croot/joblib_1666298844297/work
+lxml==4.9.1
+mkl-fft==1.3.1
+mkl-random @ file:///tmp/build/80754af9/mkl_random_1626186066731/work
+mkl-service==2.4.0
+numexpr @ file:///croot/numexpr_1668713893690/work
+numpy==1.23.5
+omegaconf==2.0.6
+packaging @ file:///tmp/build/80754af9/packaging_1637314298585/work
+pandas==1.5.1
+pathtools==0.1.2
+Pillow==9.3.0
+portalocker==2.6.0
+promise @ file:///home/conda/feedstock_root/build_artifacts/promise_1666852311619/work
+protobuf==3.15.8
+psutil @ file:///opt/conda/conda-bld/psutil_1656431268089/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1608055815057/work
+pyparsing @ file:///opt/conda/conda-bld/pyparsing_1661452539315/work
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz @ file:///opt/conda/conda-bld/pytz_1654762638606/work
+PyYAML @ file:///home/conda/feedstock_root/build_artifacts/pyyaml_1648757097602/work
+rdkit==2022.9.1
+regex==2022.10.31
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1661872987712/work
+sacrebleu==2.3.1
+scikit-learn @ file:///croot/scikit-learn_1667587546862/work
+scipy==1.9.3
+sentencepiece==0.1.97
+sentry-sdk @ file:///home/conda/feedstock_root/build_artifacts/sentry-sdk_1668441975542/work
+setproctitle @ file:///home/conda/feedstock_root/build_artifacts/setproctitle_1610127629676/work
+shortuuid @ file:///home/conda/feedstock_root/build_artifacts/shortuuid_1668713357889/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+smmap @ file:///home/conda/feedstock_root/build_artifacts/smmap_1611376390914/work
+tabulate==0.9.0
+threadpoolctl @ file:///Users/ktietz/demo/mc3/conda-bld/threadpoolctl_1629802263681/work
+torch==1.13.0
+torchaudio==0.13.0
+tqdm==4.64.1
+typing_extensions @ file:///tmp/abs_ben9emwtky/croots/recipe/typing_extensions_1659638822008/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1658789158161/work
+wandb @ file:///home/conda/feedstock_root/build_artifacts/wandb_1667561941652/work
