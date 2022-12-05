@@ -12,7 +12,7 @@ def compute_rmse(y_pred, y, ma, mi):
     y_prd = [(ma -mi)*x +mi  for x in y_pred]
     y_l = [(ma -mi)*x + mi  for x in y]
     df = pd.DataFrame(data={"y_l": y, "y_pred": y_prd, "y_l_scale": y_l, "y_pred_scale": y_pred})
-    rmse = mean_squared_error([(ma -mi)*x + mi  for x in y], [(ma -mi)*x +mi  for x in y_pred])
+    rmse = np.sqrt(mean_squared_error([(ma -mi)*x + mi  for x in y], [(ma -mi)*x +mi  for x in y_pred]))
     print(f"RMSE: {rmse}")
     return rmse
 
