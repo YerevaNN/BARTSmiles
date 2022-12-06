@@ -20,6 +20,7 @@ Clone BARTSmiles repo:
 Install Fairseq:
 
 ```bash 
+cd root
 git clone https://github.com/facebookresearch/fairseq.git
 cd fairseq
 pip install --editable ./
@@ -46,7 +47,7 @@ cd ../../BARTSmiles/
 1) Download and preprocess MoleculeNet datasets: 
 Use the following command from the root folder:
 ```
-python process/process_datasets.py --dataset-name esol --is-MoleculeNet True --root [the path where locate your BARTSmiles folder]
+python preprocess/process_datasets.py --dataset-name esol --is-MoleculeNet True --root [the path where locate your BARTSmiles folder]
 ```
 This will create folders in `root/chemical/checkpoints/evaluation_data/esol` directory: 
 ```
