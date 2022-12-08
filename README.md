@@ -5,22 +5,28 @@
 **BARTSmiles** can be fine-tuned on chemical property prediction and generative tasks, including chemical reaction prediction and retrosynthesis. *BARTSmiles* allows to get multiple state-of-the-art results. 
 
 
+
+
+Assuming you are in a root folder. In the rest of this readme, we will name this folder `root`. 
+
+Clone BARTSmiles repo in the root directory:
+
+```bash
+git clone https://github.com/YerevaNN/BARTSmiles.git
+```
 ## Setup 
 
 Setup a conda environment:
 
-`conda create --name <env_name> --file examples/requirements.txt`
-
-Assuming you are in a root folder. In the rest of this readme, we will name this folder `root`.
-
-Clone BARTSmiles repo:
-
-`git clone https://github.com/YerevaNN/BARTSmiles.git`
-
-Install Fairseq:
+```
+cd BARTSmiles
+conda env create --file=environment.yml
+conda activate bartsmiles
+cd ..
+```
+Clone and install Fairseq in the root directory:
 
 ```bash 
-cd root
 git clone https://github.com/facebookresearch/fairseq.git
 cd fairseq
 pip install --editable ./
@@ -45,7 +51,7 @@ cd ../../BARTSmiles/
 ## Fine-tuning on MoleculeNet tasks
 
 1) Download and preprocess MoleculeNet datasets: 
-Use the following command from the root folder:
+Use the following command from the BARTSmiles folder:
 ```
 python preprocess/process_datasets.py --dataset-name esol --is-MoleculeNet True --root [the path where locate your BARTSmiles folder]
 ```
