@@ -130,7 +130,3 @@ dmypy.json
 
 # Experiment tracking
 wandb
-
-#env files
-*.txt
-*.yml
