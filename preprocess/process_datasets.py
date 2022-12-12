@@ -16,7 +16,7 @@ p = argparse.ArgumentParser(description=__doc__,
 # p.add_argument("--input", help="input file", type=str, required=True)
 p.add_argument("--dataset-name", type=str, required=True)
 p.add_argument("--delimiter", type=str, default=",")
-p.add_argument("--is-MoleculeNet", help="MoleculeNet", default=False)
+p.add_argument("--is-MoleculeNet", help="MoleculeNet", type=bool, default=False)
 p.add_argument('--root', default="/home/gayane/BartLM",
                     help="add your root path")
 
