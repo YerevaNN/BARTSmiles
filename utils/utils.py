@@ -7,7 +7,6 @@ import numpy as np
 import torch
 import os
 
-root = "/home/gayane/BartLM"
 def compute_rmse(y_pred, y, ma, mi):
     y_prd = [(ma -mi)*x +mi  for x in y_pred]
     y_l = [(ma -mi)*x + mi  for x in y]
@@ -46,7 +45,7 @@ def multi_task_predict(self, head: str, tokens: torch.LongTensor, return_logits:
         probabies.append(F.log_softmax(logits[i], dim=-1))
     return probabies
 
-def tokenize(X_splits, inp):
+def tokenize(X_splits, root):
     print("Tokenizing")
     splits = []
     for path_ in X_splits:
@@ -82,7 +81,7 @@ def getMurcoScaffoldList(df: pd.DataFrame, column: str, include_chirality: bool 
     return df
 
 
-def generateMurcoScaffold(dataset_name: str):
+def generateMurcoScaffold(dataset_name: str, root):
 
     path = f"{root}/chemical/checkpoints/evaluation_data/{dataset_name}/{dataset_name}/"
     train_df = pd.read_csv(f"{path}train_{dataset_name}.csv")
@@ -98,7 +97,7 @@ def generateMurcoScaffold(dataset_name: str):
     return train_df, valid_df, test_df
 
 
-def fairseq_preprocess_cmd(_train, _valid, _test, input0_or_label, store_path, dataset_name):
+def fairseq_preprocess_cmd(root, _train, _valid, _test, input0_or_label, store_path, dataset_name):
 
     os.system(('fairseq-preprocess --only-source '
         f'--trainpref "{_train}" '
