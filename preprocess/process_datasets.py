@@ -13,7 +13,7 @@ EMPTY_INDEX = -1
 p = argparse.ArgumentParser(description=__doc__,
                             formatter_class=argparse.RawDescriptionHelpFormatter)
 
-# p.add_argument("--input", help="input file", type=str, required=True)
+p.add_argument("--input", help="input file", type=str)
 p.add_argument("--dataset-name", 
                 type=str, required=True)
 p.add_argument("--delimiter", 

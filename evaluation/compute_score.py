@@ -124,10 +124,11 @@ if len(dataset_js["class_index"])>1:
             smile = torch.cat((torch.cat((torch.tensor([0]), smile[:126])), torch.tensor([2])))
             output = bart.predict(f'sentence_classification_head{j}', smile)
             target = target[0].item()
-            y_pred.append(output[0][1].exp().item())
             if target_dict.__getitem__(4) == "1":
+                y_pred.append(output[0][0].exp().item())
                 y.append(-1 * target + 5)
             else:
+                y_pred.append(output[0][1].exp().item())
                 y.append(target - 4)
         y_pred_list.append(y_pred)
         y_list.append(y)
@@ -137,8 +138,13 @@ else:
         output = bart.predict('sentence_classification_head', smile, return_logits=is_regression)
         if not is_regression:
             target = target[0].item()
-            y_pred.append(output[0][1].exp().item())
-            y.append(target - 4)
+            if target_dict.__getitem__(4) == "1":
+                y_pred.append(output[0][0].exp().item())
+                y.append(-1 * target + 5)
+            else:
+                y_pred.append(output[0][1].exp().item())
+                y.append(target - 4)
+            
             
         elif is_regression: 
             y_pred.append(output[0][0].item())
