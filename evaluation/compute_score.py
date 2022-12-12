@@ -138,11 +138,7 @@ else:
         if not is_regression:
             target = target[0].item()
             y_pred.append(output[0][1].exp().item())
-            if target_dict.__getitem__(4) == "1":
-                y.append(-1 * target + 5)
-            else:
-                y.append(target - 4)
-            
+            y.append(target - 4)
             
         elif is_regression: 
             y_pred.append(output[0][0].item())

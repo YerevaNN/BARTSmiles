@@ -17,8 +17,6 @@ def compute_rmse(y_pred, y, ma, mi):
 
 def compute_auc(y_pred, y):
     auc = roc_auc_score(y, y_pred)
-    if auc < 0.5:
-        auc = 1 - auc
     print(f"ROC_AUC_SCORE: {auc}")
     
     return auc
