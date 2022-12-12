@@ -14,16 +14,27 @@ p = argparse.ArgumentParser(description=__doc__,
                             formatter_class=argparse.RawDescriptionHelpFormatter)
 
 # p.add_argument("--input", help="input file", type=str, required=True)
-p.add_argument("--dataset-name", type=str, required=True)
-p.add_argument("--delimiter", type=str, default=",")
-p.add_argument("--is-MoleculeNet", help="MoleculeNet", type=bool, default=False)
-p.add_argument('--root', default="/home/gayane/BartLM",
-                    help="add your root path")
+p.add_argument("--dataset-name", 
+                type=str, required=True)
+p.add_argument("--delimiter", 
+                type=str, default=",")
+p.add_argument("--is-MoleculeNet", 
+                help="MoleculeNet", 
+                choices=('True','False'), 
+                default=False)
+p.add_argument('--root', 
+                default="/home/gayane/BartLM",
+                help="add your root path")
 
 args = p.parse_args()
 root = args.root
+MolNet_flag = args.is_MoleculeNet == 'True'
+
+
+
 sys.path.append(f"{root}/BARTSmiles/utils/")
 from utils import tokenize, create_raw, fairseq_preprocess_cmd
+
 
 np.random.seed(123)
 with open(f'{root}/BARTSmiles/datasets.json') as f:
@@ -45,7 +56,7 @@ else:
     os.system(f'mkdir -p {store_path}/{args.dataset_name}/{args.dataset_name}')
     path = f"{store_path}/{args.dataset_name}/{args.dataset_name}/"
 
-if args.is_MoleculeNet:
+if MolNet_flag:
     # For MoleculeNet data
     
     v = eval(f"dc.molnet.load_{dataset['load_name']}")

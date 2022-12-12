@@ -13,7 +13,7 @@ p.add_argument("--subtasks",
                     type=int, 
                     default=1)
 p.add_argument("--single-task", 
-                    type=bool, 
+                    choices=('True','False'), 
                     default=False)
 p.add_argument("--epoch", 
                     type=int, 
@@ -26,7 +26,7 @@ p.add_argument("--is-Regression",
                     help="Regrestion։ True or Classification: False")
 
 p.add_argument("--add-noise", 
-                    type=bool,
+                    choices=('True','False'), 
                     help="True or False")
 
 p.add_argument('--root', default="/home/gayane/BartLM",
@@ -71,7 +71,7 @@ with open(path, 'w') as f:
     # print (task, 1 if not single_task else subtask)
     for lr in learning_rate:
         for dropout in dropouts:
-            if args.add_noise:
+            if args.add_noise == 'True':
                 for nt in noise:
                     for ld in lmb: 
                         print(subtask)
