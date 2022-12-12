@@ -95,11 +95,11 @@ def generateMurcoScaffold(dataset_name: str, root):
     return train_df, valid_df, test_df
 
 
-def fairseq_preprocess_cmd(root, _train, _valid, _test, input0_or_label, store_path, dataset_name):
+def fairseq_preprocess_cmd(root, _train, _valid, _test, input0_or_label, store_path, dataset_name, src_dict):
 
     os.system(('fairseq-preprocess --only-source '
         f'--trainpref "{_train}" '
         f'--validpref "{_valid}" '
         f'--testpref "{_test}" '
         f'--destdir "{store_path}/{dataset_name}/processed/{input0_or_label}" --workers 60 '
-        f'--srcdict {root}/chemical/tokenizer/chem.vocab.fs'))
+        f'{src_dict}'))

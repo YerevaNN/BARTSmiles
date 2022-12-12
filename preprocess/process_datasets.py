@@ -251,5 +251,7 @@ if len(dataset["class_index"]) > 1:
         fairseq_preprocess_cmd(root, X_splits[i][0], X_splits[i][1], X_splits[i][2], "input0", store_path, f"{args.dataset_name}_{i}")
         fairseq_preprocess_cmd(root, y_splits[i][0], y_splits[i][1], y_splits[i][2], "label", store_path, f"{args.dataset_name}_{i}")
 else:
-    fairseq_preprocess_cmd(root, X_splits[0], X_splits[1], X_splits[2], "input0", store_path, args.dataset_name)
-    fairseq_preprocess_cmd(root, y_splits[0], y_splits[1], y_splits[2], "label", store_path, args.dataset_name)
+    sc_dict = f'--srcdict{root}/chemical/tokenizer/chem.vocab.fs'
+
+    fairseq_preprocess_cmd(root, X_splits[0], X_splits[1], X_splits[2], "input0", store_path, args.dataset_name, sc_dict)
+    fairseq_preprocess_cmd(root, y_splits[0], y_splits[1], y_splits[2], "label", store_path, args.dataset_name, "")
