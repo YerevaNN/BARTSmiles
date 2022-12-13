@@ -68,23 +68,37 @@ path = f"{root}/BARTSmiles/fine-tuning/grid_search.csv"
 with open(path, 'w') as f:
     head = ["","Type","Datasize","# of steps","# of subtasks","lr","Minutes to train 1 subtask","Hours to train all subtasks","dropout","noise_type","lambda\n"]
     f.write(",".join(head))
-    task = subtask if single_task else 1
-    print(task)
-    # print (task, 1 if not single_task else subtask)
+    print(subtask)
     for lr in learning_rate:
         for dropout in dropouts:
             if args.add_noise == 'True':
                 for nt in noise:
                     for ld in lmb: 
                         print(subtask)
-                        row = f"{name},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},{task},{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout},{nt},{ld}"
-                        f.write(row)
-                        f.write('\n')
+                        if subtask > 1:
+                            for i in range(subtask):
+                                name_ = f"{name}_{i}"
+                                row = f"{name_},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},1,{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout},{nt},{ld}"
+                                f.write(row)
+                                f.write('\n')
+                            f.write('\n')
+                        else:
+                            row = f"{name},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},{subtask},{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout},{nt},{ld}"
+                            f.write(row)
+                            f.write('\n')
                         
             else:
-                row = f"{name},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},{task},{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout}"
-                f.write(row)
-                f.write('\n')
+                if subtask > 1:
+                    for i in range(subtask):
+                        name_ = f"{name}_{i}"
+                        row = f"{name_},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},{1},{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout}"
+                        f.write(row)
+                        f.write('\n')
+                    f.write('\n')
+                else:
+                    row = f"{name},{regr_or_class},{dataset_size},{int(TOTAL_NUM_UPDATES*100)},{subtask},{lr},{minuts_1_task * (subtask )},{Hours_to_train_all_subtasks},{dropout}"
+                    f.write(row)
+                    f.write('\n')
 
 
 
