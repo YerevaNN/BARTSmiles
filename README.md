@@ -123,10 +123,11 @@ Command for a specific subtask of a multilabel classification task:
 ``` 
 python fine-tuning/generate_grid_bartsmiles.py --root [the path where locate your BARTSmiles folder] --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
 ```
+All required parameters for training are in grid_search.csv and you can start the training.
 
 3) Login to your wandb
-    You have to login in wandb.
-    You can follow: https://docs.wandb.ai/ref/cli/wandb-login 
+    Befor start the training you have to login in wandb for tracking the trainings.
+    For login you can follow: https://docs.wandb.ai/ref/cli/wandb-login 
 
 4) Train the models using the following command:
 
@@ -136,7 +137,7 @@ python fine-tuning/train_grid_bartsmiles.py --root [the path where locate your B
 
 This will produce a checkpoint in `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
 
-5) You will write wandb url in `wandb_url.csv` file 
+5) You will write wandb url in `root/BARTSmiles/evaluation/wandb_url.csv` file 
 example:
 
 ``` 
