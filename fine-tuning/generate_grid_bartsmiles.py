@@ -7,7 +7,7 @@ p.add_argument("--dataset-name",
                     type=str, 
                     required=True)
 p.add_argument("--dataset-size", 
-                    type=str, 
+                    type=int, 
                     default="4200")
 p.add_argument("--subtasks", 
                     type=int, 
@@ -22,7 +22,8 @@ p.add_argument("--batch-size",
                     type=int, default=16)
 
 p.add_argument("--is-Regression", 
-                    default=False, 
+                    choices=('True','False'),
+                    default="False",
                     help="Regrestion։ True or Classification: False")
 
 p.add_argument("--add-noise", 
@@ -37,7 +38,8 @@ root = args.root
 name = args.dataset_name
 ep = args.epoch
 bs = args.batch_size
-single_task = bool(args.single_task)
+single_task = args.single_task == "True"
+is_Regression = args.is_Regression == "True"
 dataset_size = int(args.dataset_size)
 subtask = args.subtasks
 print(single_task, type(args.single_task))
@@ -51,7 +53,7 @@ time_param = 5.2 / 7000
 
 head = ["","Type","Experimental","Datasize","# of steps","# of subtasks","lr","Minutes to train 1 subtask","Hours to train all subtasks","dropout","noise_type","lambda"]
 
-regr_or_class = "Regression" if args.is_Regression else "Classification"
+regr_or_class = "Regression" if is_Regression else "Classification"
 minuts_1_task = dataset_size * 0.8 * time_param * 10
 Hours_to_train_all_subtasks = minuts_1_task * (subtask) / 60 if args.single_task else minuts_1_task * time_param * subtask / 6
 
