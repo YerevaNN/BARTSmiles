@@ -18,6 +18,10 @@ args = parser.parse_args()
 disk = args.disk
 root = args.root
 
+os.system(f"mkdir -p {root}/chemical/checkpoints/train_params_csv/")
+os.system(f"mkdir -p {root}/chemical/log")
+
+
 with open(f'{root}/BARTSmiles/evaluation/wandb_url.csv') as f:
     r = csv.DictReader(f)
     lines = [row for row in r]
