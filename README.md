@@ -153,3 +153,7 @@ python evaluation/evaluate_swa_bartsmiles.py  --root [the path where locate your
 ```
 
 This will produce a log file with output and averaged checkpoints respectively in `root/chemical/log/`  and `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folders.
+
+
+### Nots 
+If you want to fine-tune another dataset you have to add deatails in datasets.json files and your preprocessing code in `root/preprocess/process_datasets.py` file in line 103. The key must not contain the '_' symbol unless the following symbols are numbers.
