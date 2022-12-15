@@ -109,7 +109,7 @@ for name in names:
     params_df = pd.read_csv(f'{root}/chemical/checkpoints/train_params_csv/{name}.csv')
 
     best_val_loss.append(params_df['valid/loss'].argmin(skipna=True) +1 )
-    best_val_accuracy.append(params_df['valid/loss'].argmax(skipna=True) + 1)
+    best_val_accuracy.append(params_df['valid/accuracy'].argmax(skipna=True) + 1)
 
 
 train_sum = pd.read_csv(f'{root}/chemical/checkpoints/training_results_csv/wandb_path.csv')
