@@ -154,7 +154,7 @@ for i in range(len(names)):
 
 
 
-    if not is_regress:
+    if not is_regress[i]:
 
         cmd = f"""python {root}/fairseq/scripts/average_checkpoints.py --inputs {directory}/ --output {directory}/{chkpt_name_best_val_acc}.pt --checkpoint-upper-bound {upper_bound_best_val_acc} --num-epoch-checkpoints {chkpt_count}""" 
         print("---------------------> chkpt_name_best_val_acc SWA: ", cmd)
