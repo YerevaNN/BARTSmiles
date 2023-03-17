@@ -69,15 +69,16 @@ for i, task in zip(range(len(lines)),tqdm(lines)):
     df = df.append(dic, ignore_index=True)
 
     params = json.loads(run.json_config)
+    run_history = run.history()
     if df['r3f'][i] == 0 :
         if params['args']['value']['regression_target']:
-            df_summ = run.history()[['_step', 'train/loss_scale', 'train/loss', 
+            df_summ = run_history[['_step', 'train/loss', 
                 'valid/loss', 'train/lr', 'valid/best_loss']]
         else:
-            df_summ = run.history()[['_step', 'train/accuracy', 'train/loss_scale', 'train/loss', 
+            df_summ = run_history[['_step', 'train/accuracy', 'train/loss', 
                 'valid/loss', 'train/lr', 'valid/accuracy', 'valid/best_loss']]
     else: 
-        df_summ = run.history()[['_step', 'train/accuracy', 'train/loss_scale', 'train/loss', 
+        df_summ = run_history[['_step', 'train/accuracy', 'train/loss', 
                 'valid/loss', 'train/lr', 'valid/accuracy', 'valid/best_loss', "train/symm_kl", "valid/symm_kl"]]
 
 
@@ -85,6 +86,7 @@ for i, task in zip(range(len(lines)),tqdm(lines)):
 
 
     df_summ = df_summ[df_summ['valid/loss'].notna()]
+    df_summ["is_regression"] = [is_regress] * df_summ.shape[0]
     df_summ.reset_index().to_csv(f'{root}/chemical/checkpoints/train_params_csv/{name}.csv')
 
 df.to_csv(f'{root}/chemical/checkpoints/training_results_csv/wandb_path.csv')
@@ -109,7 +111,9 @@ for name in names:
     params_df = pd.read_csv(f'{root}/chemical/checkpoints/train_params_csv/{name}.csv')
 
     best_val_loss.append(params_df['valid/loss'].argmin(skipna=True) +1 )
-    best_val_accuracy.append(params_df['valid/accuracy'].argmax(skipna=True) + 1)
+    if not params_df["is_regression"].all():
+        # ------------------------------------------------------------------------------------------------------
+        best_val_accuracy.append(params_df['valid/accuracy'].argmax(skipna=True) + 1)
 
 
 train_sum = pd.read_csv(f'{root}/chemical/checkpoints/training_results_csv/wandb_path.csv')
@@ -121,7 +125,10 @@ for i in range(len(names)):
     total_num_update = row['total_num_update'][i]
     warmup_updates = row['warmup_updates'][i]
     upper_bound_best_val_loss = best_val_loss[i]+2 if best_val_loss[i] > 1 else 4
-    upper_bound_best_val_acc = best_val_accuracy[i] + 2 if best_val_accuracy[i] > 1 else 4
+    is_regress = row['is_regression']
+    print(is_regress[i])
+    if not is_regress[i]:
+        upper_bound_best_val_acc = best_val_accuracy[i] + 2 if best_val_accuracy[i] > 1 else 4
     upper_bound_last = 11
     bs = 16
     chkpt_count = 4
@@ -132,12 +139,13 @@ for i in range(len(names)):
 
     drout = row["dropout"][i]
     chkpt_name_best_val_loss = f"chkpt_upper_bound_best_val_loss_{upper_bound_best_val_loss}_count_{chkpt_count}"
-    chkpt_name_best_val_acc = f"chkpt_upper_bound_best_val_acc_{upper_bound_best_val_acc}_count_{chkpt_count}"
+    if not is_regress[i]:
+        chkpt_name_best_val_acc = f"chkpt_upper_bound_best_val_acc_{upper_bound_best_val_acc}_count_{chkpt_count}"
     chkpt_name_last = f"chkpt_upper_bound_last_{upper_bound_last}_count_{chkpt_count}"
     
     directory = f"{disk}{n}"
     task_name = n.split("_")[0] + '_' + n.split("_")[1] if n.split("_")[1].split('-')[0].isdigit() or n.split("_")[1].isdigit() else n.split("_")[0]
-    is_regress = row['is_regression']
+    
     noise_params = f" --noise_type {noise_type} --r3f {r3f_lambda}" if noise_type in ["uniform", "normal"] else ""
     cmd = f"""python {root}/BARTSmiles/evaluation/compute_score.py --dataset-type {args.dataset_type} --disk {disk} --root {root} --lr {lr} --dropout {drout}{noise_params} --dataset-name {task_name} --subtask 1 --warmup-update {warmup_updates} --total-number-update {total_num_update} --checkpoint_name checkpoint_best.pt >> {root}/chemical/log/{task_name}.log""" 
     print("---------------------> chkpt_name_best_val_loss: ", cmd)

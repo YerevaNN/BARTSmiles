@@ -38,7 +38,7 @@ for task in tqdm(lines):
     print(f"\nStarting {task_name}")
     
     TOTAL_NUM_UPDATES = int(float(task['# of steps']))
-    WARMUP_UPDATES = int(0.16 * TOTAL_NUM_UPDATES)
+    WARMUP_UPDATES = int(0.1 * TOTAL_NUM_UPDATES)
     drout = task["dropout"]
     num_class = 2 if task['Type'] == 'Classification' and "AcuteOralToxicity" not in task_name else (1 if "AcuteOralToxicity" not in task_name else 3)
     bs = 16
@@ -85,9 +85,9 @@ for task in tqdm(lines):
         directory = f"{disk}{codename}"  
 
         cmd = f"mkdir -p {directory}"
-            
+        print(f"num_class {num_class}")    
         os.system(cmd) 
-        cmd = f"""CUDA_VISIBLE_DEVICES=0 fairseq-train {PATH1}{task_name}{PATH2} --update-freq {bs//2} --restore-file {BART_PATH} --wandb-project Fine_Tune_{task_name} --batch-size 2 --task sentence_prediction --num-workers 1 --add-prev-output-tokens --layernorm-embedding --share-all-embeddings --share-decoder-input-output-embed --reset-optimizer --reset-dataloader --reset-meters --required-batch-size-multiple 1 --init-token 0 --arch bart_large --skip-invalid-size-inputs-valid-test --criterion sentence_prediction --max-target-positions 128 --max-source-positions 128 --dropout {drout} --optimizer adam --adam-betas "(0.9, 0.999)" --adam-eps 1e-08 --weight-decay 0.01 --attention-dropout 0.2 --relu-dropout 0.1 --clip-norm 0.1 --lr-scheduler polynomial_decay --lr {lr} --total-num-update {TOTAL_NUM_UPDATES} --max-update {TOTAL_NUM_UPDATES} --warmup-updates {WARMUP_UPDATES} {keep_last_check} --keep-best-checkpoints 1 --fp16 --threshold-loss-scale 1 --fp16-scale-window 128 --max-epoch 10 --best-checkpoint-metric loss --regression-target --num-classes {num_class} --save-dir {directory} >> {root}/chemical/log/{codename}.log"""
+        cmd = f"""CUDA_VISIBLE_DEVICES=0 fairseq-train {PATH1}{task_name}{PATH2} --update-freq {bs//2} --restore-file {BART_PATH} --wandb-project Fine_Tune_{task_name} --batch-size 2 --task sentence_prediction --num-workers 1 --add-prev-output-tokens --layernorm-embedding --share-all-embeddings --share-decoder-input-output-embed --reset-optimizer --reset-dataloader --reset-meters --required-batch-size-multiple 1 --init-token 0 --arch bart_large --skip-invalid-size-inputs-valid-test --criterion sentence_prediction --max-target-positions 128 --max-source-positions 128 --dropout {drout} --optimizer adam --adam-betas "(0.9, 0.999)" --adam-eps 1e-08 --weight-decay 0.01 --attention-dropout 0.2 --relu-dropout 0.1 --clip-norm 0.1 --lr-scheduler polynomial_decay --lr {lr} --total-num-update {TOTAL_NUM_UPDATES} --max-update {TOTAL_NUM_UPDATES} --warmup-updates {WARMUP_UPDATES} {keep_last_check} --keep-best-checkpoints 1 --max-epoch 10 --best-checkpoint-metric loss --fp16 --threshold-loss-scale 1 --fp16-scale-window 128 --regression-target --num-classes {num_class} --save-dir {directory} >> {root}/chemical/log/{codename}.log"""
         print(f"\n   {1}/{subtask_count}: Running the following command:")
         print(cmd)
         os.system(cmd)
@@ -96,4 +96,4 @@ for task in tqdm(lines):
         print("best remove last and best2 checkpoints: ", cmd)
         os.system(cmd)
     
-    print("\n\n")
+        print("\n\n")
