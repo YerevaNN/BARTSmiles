@@ -38,7 +38,7 @@ for task in tqdm(lines):
     print(f"\nStarting {task_name}")
     
     TOTAL_NUM_UPDATES = int(float(task['# of steps']))
-    WARMUP_UPDATES = int(0.1 * TOTAL_NUM_UPDATES)
+    WARMUP_UPDATES = int(0.16 * TOTAL_NUM_UPDATES)
     drout = task["dropout"]
     num_class = 2 if task['Type'] == 'Classification' and "AcuteOralToxicity" not in task_name else (1 if "AcuteOralToxicity" not in task_name else 3)
     bs = 16
