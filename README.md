@@ -5,19 +5,22 @@
 **BARTSmiles** can be fine-tuned on chemical property prediction and generative tasks, including chemical reaction prediction and retrosynthesis. *BARTSmiles* allows to get multiple state-of-the-art results. 
 
 
+## Hugging Face
+You can use huggingface model from [here](https://huggingface.co/gayane/BARTSmiles)
 
+
+
+## Setup 
 
 Clone BARTSmiles repo in the root directory:
 
 ```bash
 git clone https://github.com/YerevaNN/BARTSmiles.git
 ```
-## Setup 
-
 Setup a conda environment:
 
 ```bash
-conda env create --file= ./BARTSmiles/environment.yml
+conda env create --file=./BARTSmiles/environment.yml
 conda activate bartsmiles
 ```
 
@@ -49,9 +52,10 @@ wget http://public.storage.yerevann.com/BARTSmiles/chem.model
 wget http://public.storage.yerevann.com/BARTSmiles/chem.vocab.fs
 
 cd ./
-mkdir ./checkpoints
-cd ./checkpoints
+mkdir ./chemical/checkpoints/evaluation_data
+cd ./chemical/checkpoints
 wget http://public.storage.yerevann.com/BARTSmiles/pretrained.pt
+mv ./BARTSmiles/data_name ./chemical/checkpoints/evaluation_data
 cd ./BARTSmiles/
 ```
 
@@ -59,10 +63,12 @@ cd ./BARTSmiles/
 
 dict.txt is the vocab file without special tokens. You need to provide the structure of data_name directories.
 ```python
-model = f"./checkpoints/evaluation_data/data_directory_name/processed/input0"
-bart = BARTModel.from_pretrained(model, checkpoint_file = f'./checkpoints/pretrained.pt',
+from fairseq.models.bart import BARTModel
+
+model = f"./chemical/checkpoints/evaluation_data/data_name/processed/input0"
+bart = BARTModel.from_pretrained(model, checkpoint_file = f'./chemical/checkpoints/pretrained.pt',
                                  bpe="sentencepiece",
-                                 sentencepiece_model=f"~./tokenizer/chem.model")
+                                 sentencepiece_model=f"./chemical/tokenizer/chem.model")
 ```
 
 ## Extract the features
@@ -78,7 +84,7 @@ or you can use this file for batches: ```python ./BARTSmiles/utils/extract_featu
 
 1) Download and preprocess MoleculeNet datasets: 
 Use the following command from the BARTSmiles folder:
-```
+```bash
 python preprocess/process_datasets.py --dataset-name esol --is-MoleculeNet True --root [the path where your BARTSmiles folder is located]
 ```
 This will create folders in `./chemical/checkpoints/evaluation_data/esol` directory: 
@@ -136,17 +142,17 @@ This will create folders in `./chemical/checkpoints/evaluation_data/esol` direct
 2) Generate the grid of training hyperparameters by running the script `./BARTSmiles/fine-tuning/generate_grid_bartsmiles.py`. This will write grid search parameters in `./BARTSmiles/fine-tuning/grid_search.csv` file.
 
 Command for the regression tasks: 
-```
+```bash
 python fine-tuning/generate_grid_bartsmiles.py --root [the path where your BARTSmiles folder is located] --dataset-name esol --single-task True --dataset-size 1128 --is-Regression True
 ```
 
 Command for the classification tasks having a single subtask: 
-```
+```bash
 python fine-tuning/generate_grid_bartsmiles.py --root [the path where your BARTSmiles folder is located] --dataset-name BBBP --single-task True --dataset-size 2039
 ```
 
 Command for a specific subtask of a multilabel classification task: 
-``` 
+```bash
 python fine-tuning/generate_grid_bartsmiles.py --root [the path where your BARTSmiles folder is located] --dataset-name Tox21 --subtasks 12 --single-task False --dataset-size 7831
 ```
 All required parameters for training are in grid_search.csv and you can start the training.
@@ -158,6 +164,7 @@ All required parameters for training are in grid_search.csv and you can start th
 4) Train the models using the following command:
 
 ```bash
+mkdir ./chemical/log
 python fine-tuning/train_grid_bartsmiles.py --root [the path where your BARTSmiles folder is located] --disk [the path where you want to store your checkpoints]  >> ./chemical/log/esol.log
 ```
 
@@ -166,7 +173,7 @@ This will produce a checkpoint in `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_tota
 5) You will write wandb url in `./BARTSmiles/evaluation/wandb_url.csv` file 
 example:
 
-``` 
+```
 url
 
 gayanec/Fine_Tune_clintox_0/6p76cyzr
@@ -174,7 +181,7 @@ gayanec/Fine_Tune_clintox_0/6p76cyzr
 
 6) Perform Stochastic Weight Averaging and evaluate from `./BARTSmiles/evaluation` using the following command.
 
-``` 
+```bash
 python evaluation/evaluate_swa_bartsmiles.py  --root [the path where your BARTSmiles folder is located] --disk [the path will your checkpoints be located] --dataset-type [dataset type: train, valid or test]
 ```
 
@@ -183,3 +190,9 @@ This will produce a log file with output and averaged checkpoints respectively i
 
 ## Note 
 If you want to fine-tune another dataset you have to add deatails in datasets.json files and your preprocessing code in `./preprocess/process_datasets.py` file in line 103. The key must not contain the '_' symbol unless the following symbols are numbers.
+
+## Citation
+@article{chilingaryan2022bartsmiles, title={Bartsmiles: Generative masked language models for molecular representations}, author={Chilingaryan, Gayane and Tamoyan, Hovhannes and Tevosyan, Ani and Babayan, Nelly and Khondkaryan, Lusine and Hambardzumyan, Karen and Navoyan, Zaven and Khachatrian, Hrant and Aghajanyan, Armen}, journal={arXiv preprint arXiv:2211.16349}, year={2022} }
+
+
+[here]: https://huggingface.co/gayane/BARTSmiles

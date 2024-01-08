@@ -1,2 +1,10 @@
 ,Type,Datasize,# of steps,# of subtasks,lr,Minutes to train 1 subtask,Hours to train all subtasks,dropout,noise_type,lambda
-HIV,Classification,41127,20564,1,3e-5,244,4.1,0.1
+esol,Regression,1128,564,1,5e-6,6.7,0.1,0.1
+esol,Regression,1128,564,1,5e-6,6.7,0.1,0.2
+esol,Regression,1128,564,1,5e-6,6.7,0.1,0.3
+esol,Regression,1128,564,1,1e-5,6.7,0.1,0.1
+esol,Regression,1128,564,1,1e-5,6.7,0.1,0.2
+esol,Regression,1128,564,1,1e-5,6.7,0.1,0.3
+esol,Regression,1128,564,1,3e-5,6.7,0.1,0.1
+esol,Regression,1128,564,1,3e-5,6.7,0.1,0.2
+esol,Regression,1128,564,1,3e-5,6.7,0.1,0.3

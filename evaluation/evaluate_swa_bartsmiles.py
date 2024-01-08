@@ -20,6 +20,7 @@ disk = args.disk
 root = args.root
 
 os.system(f"mkdir -p {root}/chemical/checkpoints/train_params_csv/")
+os.system(f"mkdir -p {root}/chemical/checkpoints/training_results_csv/")
 os.system(f"mkdir -p {root}/chemical/log")
 
 
