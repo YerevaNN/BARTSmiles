@@ -77,7 +77,10 @@ Extract the last layer's features:
 ```python
 last_layer_features = bart.extract_features(bart.encode(smiles)) 
 ```
-or you can use this file for batches: ```python ./BARTSmiles/utils/extract_features.py --path [the path where your BARTSmiles folder is located] --dataset-name esol --batch-size 32 --output-path [where you want to locate the outputs]```
+or you can use this file for batches: 
+```bash 
+python ./BARTSmiles/utils/extract_features.py --path [ the path where your BARTSmiles folder is located] --dataset-name esol --batch-size 32 --output-path [ where you want to locate the outputs]
+```
 
 
 ## Fine-tuning on MoleculeNet tasks
@@ -170,7 +173,7 @@ python fine-tuning/train_grid_bartsmiles.py --root [the path where your BARTSmil
 
 This will produce a checkpoint in `disk/clintox_1_bs_16_dropout_0.1_lr_5e-6_totalNum_739_warmup_118/` folder.
 
-5) You will write wandb url in `./BARTSmiles/evaluation/wandb_url.csv` file 
+5) You will write wandb urls in `./BARTSmiles/evaluation/wandb_url.csv` file 
 example:
 
 ```
