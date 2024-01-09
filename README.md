@@ -6,7 +6,7 @@
 
 
 ## Hugging Face
-You can use huggingface model from [here](https://huggingface.co/gayane/BARTSmiles)
+You can use huggingface model from [here](https://huggingface.co/gayane/BARTSmiles).
 
 
 
